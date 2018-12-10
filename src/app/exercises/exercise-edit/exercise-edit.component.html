@@ -1,0 +1,65 @@
+<div class="sticky-component">
+  <div class="row">
+    <div class="col">
+      <h2>{{title}}</h2>
+    </div>
+  </div>
+
+  <form *ngIf="exercise" #exerciseEditForm="ngForm" name="form" (ngSubmit)="exerciseEditForm.form.valid && onSubmit()" novalidate>
+
+    <div class="form-row">
+      <div class="form-group col-sm-12 col-lg-6">
+        <label for="name">Naam</label>
+        <input type="text" class="form-control" [(ngModel)]="exercise.name" name="name" #name="ngModel"
+          [ngClass]="{ 
+              'is-invalid': name.invalid && (name.dirty || name.touched)
+            }"
+          required minlength="3" />
+        <div *ngIf="name.invalid && (name.touched)" class="invalid-feedback">
+          <div *ngIf="name.errors.required">Naam is verplicht</div>
+          <div *ngIf="name.errors.minlength">Naam moet minimaal 3 charachters lang zijn.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-sm-12 col-lg-6">
+        <label for="description">Beschrijving</label>
+        <input type="text" class="form-control" [(ngModel)]="exercise.description" name="description" #description="ngModel"
+          [ngClass]="{ 
+              'is-invalid': description.invalid && (description.dirty || description.touched)
+            }"
+          required minlength="3" />
+        <div *ngIf="description.invalid && (description.touched)" class="invalid-feedback">
+          <div *ngIf="description.errors.required">Beschrijving is verplicht</div>
+          <div *ngIf="description.errors.minlength">Beschrijving moet minimaal 3 charachters lang zijn.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-sm-12 col-lg-6">
+        <label for="muscles">Spieren</label>
+        <textarea  type="text" class="form-control" [(ngModel)]="exercise.muscles" name="muscles" #muscles="ngModel"
+          [ngClass]="{ 
+              'is-invalid': muscles.invalid && (muscles.dirty || muscles.touched)
+            }"
+          required rows="3"></textarea>
+        <div *ngIf="muscles.invalid && (muscles.touched)" class="invalid-feedback">
+          <div *ngIf="muscles.errors.required">Spieren zijn verplicht</div>
+          <div *ngIf="muscles.errors.minlength">Spieren moet minimaal 3 charachters lang zijn.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group">
+        <button type="button" class="btn btn-outline-warning float-right" routerLink='..'>Cancel
+        </button>
+        <button type="submit" class="btn btn-success float-right" [disabled]="!exerciseEditForm.valid">Save
+        </button>
+      </div>
+    </div>
+
+  </form>
+</div>
