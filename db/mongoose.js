@@ -36,12 +36,12 @@ var foodSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User' },
   name: String,
   date: String,
-  Energy: String,
-  Fat: String,
-  Carbohydrate: String,
-  Fibre: String,
-  Protien: String,
-  Salt: String
+  energy: String,
+  fat: String,
+  carbohydrate: String,
+  fibre: String,
+  protien: String,
+  salt: String
 });
 var Food = mongoose.model("Food", foodSchema)
 

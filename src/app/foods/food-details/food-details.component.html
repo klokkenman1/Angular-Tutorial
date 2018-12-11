@@ -1,0 +1,43 @@
+<div class="sticky-component">
+
+    <div class="row">
+      <div class="col-8">
+        <h2>{{title}}</h2>
+      </div>
+    </div>
+  
+    <div *ngIf="food">
+      <div class="media">
+        <div class="media-body">
+          <h5>Naam:</h5>
+          <h6>{{food.name | titlecase}}</h6>
+
+          <h5>Datum:</h5>
+          <h6>{{food.date}}</h6>
+
+          <h5>Energie:</h5>
+          <h6>{{food.energy}}</h6>
+
+          <h5>Vetten:</h5>
+          <h6>{{food.fat}}</h6>
+
+          <h5>Koolhydraten:</h5>
+          <h6>{{food.carbohydrate}}</h6>
+
+          <h5>Vezels:</h5>
+          <h6>{{food.fibre}}</h6>
+
+          <h5>Eiwitten:</h5>
+          <h6>{{food.protien}}</h6>
+
+          <h5>Zout:</h5>
+          <h6>{{food.salt}}</h6>
+
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!food">
+      <p>Selecteer eerst een maaltijd.</p>
+    </div>
+  
+  </div>

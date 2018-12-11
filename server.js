@@ -3,6 +3,8 @@ const path = require('path');
 const http = require('http');
 const compression = require('compression');
 const bodyParser = require('body-parser');
+const auth =  require('./authentication');
+
 
 const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
@@ -26,9 +28,28 @@ const appname = 'my-first-app';
 // Point static path to dist
 app.use(express.static(path.join(__dirname, 'dist', appname)));
 
+//Catch all except login and register
+app.all( new RegExp("^((?!login|register).)*$"), function (req, res, next) {
+
+    console.log("VALIDATE TOKEN")
+  
+    var token = (req.header('X-Access-Token')) || '';
+  
+    auth.decodeToken(token, (err, payload) => {
+        if (err) {
+            console.log('Error handler: ' + err.message);
+            res.status((err.status || 401 ));
+        } else {
+            next();
+        }
+    });
+  });
+
 app.use('/api/user', require('./routes/user.routes'));
 app.use('/api/trainingschedule', require('./routes/trainingschedule.routes'));
 app.use('/api/exercise', require('./routes/exercise.routes'));
+app.use('/api/food', require('./routes/food.routes'));
+
 
 
 

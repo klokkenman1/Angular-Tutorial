@@ -1,0 +1,9 @@
+<td>
+    {{selectedFood.name}}
+  </td>
+  <td>
+    <button *ngIf="selectedFood" type="button" class="btn btn-outline-warning float-right" [routerLink]="[selectedFood._id, 'edit']">Edit</button>
+    <button *ngIf="selectedFood" type="button" class="btn btn-outline-warning float-right" [routerLink]='[selectedFood._id]'>Details</button>
+    <button *ngIf="selectedFood" type="button" class="btn btn-outline-warning float-right" [routerLink]="[selectedFood._id, 'delete']">Delete</button>
+  
+  </td>
