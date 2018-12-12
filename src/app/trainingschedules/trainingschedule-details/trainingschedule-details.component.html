@@ -13,6 +13,15 @@
       </div>
     </div>
 
+    <div *ngFor="let day of trainingschedule.days; let i = index">
+      <h5>Day {{i + 1}}</h5>
+      <div *ngFor="let exercise of trainingschedule.days[i]" class="row">
+        <div class="col-md-10">
+          <p>{{getExerciseName(exercise)}}</p>
+        </div>
+      </div>
+    </div>
+
   </div>
   <div *ngIf="!trainingschedule">
     <p>Select a trainingschedule first.</p>

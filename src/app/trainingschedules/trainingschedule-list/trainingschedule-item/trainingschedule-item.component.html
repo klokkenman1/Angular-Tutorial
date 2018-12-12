@@ -4,4 +4,5 @@
 <td>
   <button *ngIf="selectedTrainingschedule" type="button" class="btn btn-outline-warning float-right" [routerLink]="[selectedTrainingschedule._id, 'edit']">Edit</button>
   <button *ngIf="selectedTrainingschedule" type="button" class="btn btn-outline-warning float-right" [routerLink]='[selectedTrainingschedule._id]'>Details</button>
+  <button *ngIf="selectedTrainingschedule" type="button" class="btn btn-outline-warning float-right" [routerLink]="[selectedTrainingschedule._id, 'delete']">Delete</button>
 </td>

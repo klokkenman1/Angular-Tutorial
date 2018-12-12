@@ -1,28 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Trainingschedule } from '../trainingschedule.model';
 import { TrainingschedulesService } from '../trainingschedules.service';
+import { Router, ActivatedRoute } from '@angular/router';
 import { filter, map, tap, switchMap } from 'rxjs/operators';
-import { Exercise } from '../../exercises/exercise.model';
-import { ExercisesService } from '../../exercises/exercises.service';
-@Component({
-  selector: 'app-trainingschedule-details',
-  templateUrl: './trainingschedule-details.component.html',
-  styleUrls: ['./trainingschedule-details.component.scss']
-})
-export class TrainingscheduleDetailsComponent implements OnInit {
+import { Trainingschedule } from '../trainingschedule.model';
 
-  title = 'Trainingschedule Detail';
+
+@Component({
+  selector: 'app-trainingschedule-delete',
+  templateUrl: './trainingschedule-delete.component.html',
+  styleUrls: ['./trainingschedule-delete.component.scss']
+})
+export class TrainingscheduleDeleteComponent implements OnInit {
+
+  title = "Verwijder oefening?";
   trainingschedule: Trainingschedule;
   id: String;
-  exercises: Exercise[];
-  
+
   constructor(
-    private exercisesService: ExercisesService,
     private route: ActivatedRoute,
     private trainingscheduleService: TrainingschedulesService,
-  ) { 
-    this.exercisesService.getExercises().subscribe(result => this.exercises = result);
+    private router: Router
+  ) { }
+
+  onClickDelete() {
+    this.trainingscheduleService.deleteTrainingschedule(this.id);
+    this.router.navigate(['../..'], { relativeTo: this.route });
   }
 
   ngOnInit() {
@@ -37,13 +39,8 @@ export class TrainingscheduleDetailsComponent implements OnInit {
       map(params => params['id']),
       // save id locally
       tap(id => this.id = id),
-      // then wait for trainingschedules to become available
+      // then wait for foods to become available
       switchMap(id => this.trainingscheduleService.trainingschedulesAvailable)
     ).subscribe(available => this.trainingscheduleService.getTrainingschedule(this.id).subscribe(response => this.trainingschedule = response));
   }
-
-  getExerciseName(id) {
-    return this.exercises.filter((value) => { return value._id == id })[0].name;
-  }
-
 }

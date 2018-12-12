@@ -26,20 +26,24 @@
     <div *ngFor="let day of trainingschedule.days; let i = index">
       <p>Day {{i + 1}}</p>
       <div class="form-row" *ngIf="filterExercises(i).length > 0">
-        <div class="form-group col-sm-12 col-lg-6">
-          <select [(ngModel)]="selectedExercises[i]" name="exercise{{i}}">
-            <option *ngFor="let exercise of filterExercises(i)" value="{{exercise._id}}">{{exercise.name}}</option>
-          </select>
-          <button class="btn btn-success" (click)="addExercise(i)" [disabled]="selectedExercises[i] == undefined">Add</button>
+        <div class="form-group row">
+          <div class="col-md-10">
+            <select [(ngModel)]="selectedExercises[i]" name="exercise{{i}}" style="width:150px">
+              <option *ngFor="let exercise of filterExercises(i)" value="{{exercise._id}}">{{exercise.name}}</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <button type='button' class="btn btn-success" (click)="addExercise(i)" [disabled]="selectedExercises[i] == undefined">Add</button>
+          </div>
         </div>
       </div>
 
       <div *ngFor="let exercise of trainingschedule.days[i]" class="row">
         <div class="col-md-10">
-          <p>{{exercise}}</p>
+          <p>{{getExerciseName(exercise)}}</p>
         </div>
         <div class="col-md-2">
-          <button class="btn btn-default" (click)="removeExercise(i, exercise)">Remove</button>
+          <button type='button' class="btn btn-default" (click)="removeExercise(i, exercise)">Remove</button>
         </div>
       </div>
     </div>

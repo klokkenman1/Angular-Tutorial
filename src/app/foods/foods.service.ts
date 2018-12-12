@@ -38,7 +38,7 @@ export class FoodsService {
 
   saveFood(id: String, food: Food) {
     if (this.foods) {
-      this.http.put<any>(`${environment.apiUrl}/api/food/${id}`, { name: food.name, date: food.date, energy: food.energy, fat: food.fat, carbohydrate: food.carbohydrate, fibre: food.fibre, protien: food.protien, salt: food.salt }).subscribe((result) => { this.foods.splice(this.foods.findIndex(item => item._id == id)); this.foods.push(new Food(result)) });
+      this.http.put<any>(`${environment.apiUrl}/api/food/${id}`, { name: food.name, date: food.date, energy: food.energy, fat: food.fat, carbohydrate: food.carbohydrate, fibre: food.fibre, protien: food.protien, salt: food.salt }).subscribe((result) => { this.foods.splice(this.foods.findIndex(item => item._id == id),1); this.foods.push(new Food(result)) });
     }
   }
 

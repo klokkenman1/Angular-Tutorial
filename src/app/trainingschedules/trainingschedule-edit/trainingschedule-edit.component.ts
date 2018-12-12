@@ -24,7 +24,7 @@ export class TrainingscheduleEditComponent implements OnInit {
     private trainingschedulesService: TrainingschedulesService,
     private route: ActivatedRoute,
     private router: Router
-  ) { 
+  ) {
     this.exercisesService.getExercises().subscribe(result => this.exercises = result);
   }
 
@@ -32,7 +32,7 @@ export class TrainingscheduleEditComponent implements OnInit {
     this.title = this.route.snapshot.data['title'] || 'Edit Trainingschedule';
     this.editMode = this.route.snapshot.data['trainingscheduleAlreadyExists'] || false;
 
-    if(this.editMode){
+    if (this.editMode) {
       this.route.params.subscribe((params) => {
         if (params['id']) {
           this.trainingschedulesService.trainingschedulesAvailable.subscribe(trainingscheduleAvailable => {
@@ -45,32 +45,41 @@ export class TrainingscheduleEditComponent implements OnInit {
       });
     } else {
       this.trainingschedule = new Trainingschedule();
-      this.trainingschedule.days = [[],[],[],[],[],[],[]]
+      this.trainingschedule.days = [[], [], [], [], [], [], []]
     }
   }
 
-  onSubmit() { 
+  onSubmit() {
     this.submitted = true;
 
-    console.log(this.trainingschedule);
-    // if(this.editMode) {
-    //   this.trainingschedulesService.saveTrainingschedule(this.id, this.trainingschedule);
-    // } else {
-    //   this.trainingschedulesService.saveNewTrainingschedule(this.trainingschedule);
-    // }
-    
+  console.log(this.trainingschedule);
+
+    if (this.editMode) {
+      this.trainingschedulesService.saveTrainingschedule(this.id, this.trainingschedule);
+    } else {
+      this.trainingschedulesService.saveNewTrainingschedule(this.trainingschedule);
+    }
+
     this.router.navigate(['..'], { relativeTo: this.route });
   }
 
-  addExercise(i){
+  getExerciseName(id) {
+    return this.exercises.filter((value) => { return value._id == id })[0].name;
+  }
+
+  addExercise(i) {
     this.trainingschedule.days[i].push(this.selectedExercises[i]);
+    this.selectedExercises[i] = undefined;
   }
 
-  removeExercise(i, exercise){
-    this.trainingschedule.days[i].splice(this.trainingschedule.days[i].indexOf(exercise),1);
+  removeExercise(i, exercise) {
+    this.trainingschedule.days[i].splice(this.trainingschedule.days[i].indexOf(exercise), 1);
   }
 
-  public filterExercises(i){
-    return this.exercises.filter((value) => { return !this.trainingschedule.days[i].includes(value._id)});
+  public filterExercises(i) {
+    if(this.exercises){
+      return this.exercises.filter((value) => { return !this.trainingschedule.days[i].includes(value._id) });
+    }
+    return [];
   }
 }
