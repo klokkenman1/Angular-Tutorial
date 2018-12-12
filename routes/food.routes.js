@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require("../db/mongoose");
+const auth =  require('../authentication');
 
 router.get('/', (req, res) => {
   var token = (req.header('X-Access-Token')) || '';

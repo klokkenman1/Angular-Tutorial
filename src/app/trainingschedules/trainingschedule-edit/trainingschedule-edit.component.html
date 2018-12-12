@@ -5,7 +5,8 @@
     </div>
   </div>
 
-  <form *ngIf="trainingschedule" #trainingscheduleEditForm="ngForm" name="form" (ngSubmit)="trainingscheduleEditForm.form.valid && onSubmit()" novalidate>
+  <form *ngIf="trainingschedule" #trainingscheduleEditForm="ngForm" name="form" (ngSubmit)="trainingscheduleEditForm.form.valid && onSubmit()"
+    novalidate>
 
     <div class="form-row">
       <div class="form-group col-sm-12 col-lg-6">
@@ -18,6 +19,27 @@
         <div *ngIf="name.invalid && (name.touched)" class="invalid-feedback">
           <div *ngIf="name.errors.required">Name is required</div>
           <div *ngIf="name.errors.minlength">Name must be at least 3 characters long.</div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngFor="let day of trainingschedule.days; let i = index">
+      <p>Day {{i + 1}}</p>
+      <div class="form-row" *ngIf="filterExercises(i).length > 0">
+        <div class="form-group col-sm-12 col-lg-6">
+          <select [(ngModel)]="selectedExercises[i]" name="exercise{{i}}">
+            <option *ngFor="let exercise of filterExercises(i)" value="{{exercise._id}}">{{exercise.name}}</option>
+          </select>
+          <button class="btn btn-success" (click)="addExercise(i)" [disabled]="selectedExercises[i] == undefined">Add</button>
+        </div>
+      </div>
+
+      <div *ngFor="let exercise of trainingschedule.days[i]" class="row">
+        <div class="col-md-10">
+          <p>{{exercise}}</p>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-default" (click)="removeExercise(i, exercise)">Remove</button>
         </div>
       </div>
     </div>

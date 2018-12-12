@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Trainingschedule } from '../trainingschedule.model';
 import { TrainingschedulesService } from '../trainingschedules.service';
-
+import { Exercise } from '../../exercises/exercise.model';
+import { ExercisesService } from '../../exercises/exercises.service';
 @Component({
   selector: 'app-trainingschedule-edit',
   templateUrl: './trainingschedule-edit.component.html',
@@ -15,22 +16,23 @@ export class TrainingscheduleEditComponent implements OnInit {
   id: String;
   trainingschedule: Trainingschedule;
   submitted = false;
+  exercises: Exercise[];
+  public selectedExercises: String[] = [];
 
   constructor(
+    private exercisesService: ExercisesService,
     private trainingschedulesService: TrainingschedulesService,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
+  ) { 
+    this.exercisesService.getExercises().subscribe(result => this.exercises = result);
+  }
 
   ngOnInit() {
     this.title = this.route.snapshot.data['title'] || 'Edit Trainingschedule';
     this.editMode = this.route.snapshot.data['trainingscheduleAlreadyExists'] || false;
-    // Get the data statically - changes are not reflected.
-    // this.id = +this.route.snapshot.paramMap.get('id');
 
     if(this.editMode){
-      
-      // Subscribe to changes in route params. When the route changes we get updates on route params.
       this.route.params.subscribe((params) => {
         if (params['id']) {
           this.trainingschedulesService.trainingschedulesAvailable.subscribe(trainingscheduleAvailable => {
@@ -42,27 +44,33 @@ export class TrainingscheduleEditComponent implements OnInit {
         }
       });
     } else {
-      // Create a new empty trainingschedule. The required properties are filled 
-      // with empty values by the trainingschedulemodel.
       this.trainingschedule = new Trainingschedule();
+      this.trainingschedule.days = [[],[],[],[],[],[],[]]
     }
   }
 
   onSubmit() { 
     this.submitted = true;
-    console.log('onSubmit');
-    // Save trainingschedule via the service
-    console.log(this.trainingschedule);
-    console.log(this.id);
 
-    if(this.editMode) {
-      this.trainingschedulesService.saveTrainingschedule(this.id, this.trainingschedule);
-    } else {
-      this.trainingschedulesService.saveNewTrainingschedule(this.trainingschedule);
-    }
+    console.log(this.trainingschedule);
+    // if(this.editMode) {
+    //   this.trainingschedulesService.saveTrainingschedule(this.id, this.trainingschedule);
+    // } else {
+    //   this.trainingschedulesService.saveNewTrainingschedule(this.trainingschedule);
+    // }
     
-    // Part 17: navigate back to trainingschedule-detail, displaying the correct trainingschedule!
     this.router.navigate(['..'], { relativeTo: this.route });
   }
 
+  addExercise(i){
+    this.trainingschedule.days[i].push(this.selectedExercises[i]);
+  }
+
+  removeExercise(i, exercise){
+    this.trainingschedule.days[i].splice(this.trainingschedule.days[i].indexOf(exercise),1);
+  }
+
+  public filterExercises(i){
+    return this.exercises.filter((value) => { return !this.trainingschedule.days[i].includes(value._id)});
+  }
 }

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require("../db/mongoose");
+const auth =  require('../authentication');
 
 router.get('/', (req, res) => {
   var token = (req.header('X-Access-Token')) || '';
@@ -9,7 +10,7 @@ router.get('/', (req, res) => {
       console.log('Error handler: ' + err.message);
       res.status((err.status || 401));
     } else {
-      mongoose.Trainingschedule.find((err, result) => {
+      mongoose.Trainingschedule.find({user: payload.sub}, (err, result) => {
         if (err) return console.error(err);
         res.send(result);
       })
@@ -42,7 +43,7 @@ router.post('/', (req, res) => {
         console.log('Error handler: ' + err.message);
         res.status((err.status || 401));
       } else {
-        var sportschedule = new mongoose.Trainingschedule({ user: result._id, name: req.body.name })
+        var sportschedule = new mongoose.Trainingschedule({ user: payload.sub, name: req.body.name })
         sportschedule.save(() => {
           res.send(sportschedule);
         });
