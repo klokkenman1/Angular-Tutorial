@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TrainingscheduleItemComponent } from './trainingschedule-item.component';
+import { Router, ActivatedRoute, RouterModule, Params } from '@angular/router';
+import { Observable } from 'rxjs';
 
 describe('TrainingscheduleItemComponent', () => {
   let component: TrainingscheduleItemComponent;
@@ -8,7 +10,12 @@ describe('TrainingscheduleItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TrainingscheduleItemComponent ]
+      providers: [
+        { provide: Router, useValue: {} },
+        { provide: ActivatedRoute, useValue: {params: new Observable<Params>(), snapshot: {data:[]}} },
+      ],
+      declarations: [ TrainingscheduleItemComponent ],
+      imports:[RouterModule]
     })
     .compileComponents();
   }));
@@ -16,6 +23,7 @@ describe('TrainingscheduleItemComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TrainingscheduleItemComponent);
     component = fixture.componentInstance;
+    component.selectedTrainingschedule = {name: "test"};
     fixture.detectChanges();
   });
 

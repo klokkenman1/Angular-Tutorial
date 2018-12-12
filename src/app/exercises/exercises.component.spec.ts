@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ExercisesComponent } from './exercises.component';
+import { ExerciseListComponent } from './exercise-list/exercise-list.component';
+import { RouterModule, Router, ActivatedRoute, Params, ChildrenOutletContexts } from '@angular/router';
+import { ExerciseItemComponent } from './exercise-list/exercise-item/exercise-item.component';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 describe('ExercisesComponent', () => {
   let component: ExercisesComponent;
@@ -8,7 +13,14 @@ describe('ExercisesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ExercisesComponent ]
+      providers: [
+        { provide: Router, useValue: {} },
+        { provide: HttpClient, useValue: {get:()=>{return new Observable<Params>()}} },
+        { provide: ActivatedRoute, useValue: {} },
+        { provide: ChildrenOutletContexts, useValue: {onChildOutletCreated: ()=>{}, getContext: ()=>{}} },
+      ],
+      declarations: [ ExercisesComponent, ExerciseListComponent, ExerciseItemComponent ],
+      imports:[RouterModule]
     })
     .compileComponents();
   }));

@@ -1,13 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FoodDeleteComponent } from './food-delete.component';
+import { TrainingscheduleDeleteComponent } from './trainingschedule-delete.component';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-describe('FoodDeleteComponent', () => {
-  let component: FoodDeleteComponent;
-  let fixture: ComponentFixture<FoodDeleteComponent>;
+describe('TrainingscheduleDeleteComponent', () => {
+  let component: TrainingscheduleDeleteComponent;
+  let fixture: ComponentFixture<TrainingscheduleDeleteComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -16,13 +16,13 @@ describe('FoodDeleteComponent', () => {
         { provide: HttpClient, useValue: {} },
         { provide: Router, useValue: {} }
       ],
-      declarations: [ FoodDeleteComponent ]
+      declarations: [ TrainingscheduleDeleteComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FoodDeleteComponent);
+    fixture = TestBed.createComponent(TrainingscheduleDeleteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

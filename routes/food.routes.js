@@ -1,70 +1,102 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require("../db/mongoose");
-
-//TODO: add authentication (maybe a token)
+const auth =  require('../authentication');
 
 router.get('/', (req, res) => {
-  mongoose.Food.find((err, result) => {
-    if (err) return console.error(err);
-    res.send(result);
+  var token = (req.header('X-Access-Token')) || '';
+  auth.decodeToken(token, (err, payload) => {
+    if (err) {
+      console.log('Error handler: ' + err.message);
+      res.status((err.status || 401));
+    } else {
+      mongoose.Food.find({ user: payload.sub }, (err, result) => {
+        if (err) return console.error(err);
+        res.send(result);
+      })
+    }
   })
 });
 
 router.get('/:id', (req, res) => {
-  if(req.params["id"]){
-    mongoose.Food.findOne({_id: req.params["id"]}, (err, result) => {
-      if (err) return console.error(err);
-      res.send(result);
+  var token = (req.header('X-Access-Token')) || '';
+  if (req.params["id"]) {
+    auth.decodeToken(token, (err, payload) => {
+      if (err) {
+        console.log('Error handler: ' + err.message);
+        res.status((err.status || 401));
+      } else {
+        mongoose.Food.findOne({ _id: req.params["id"], name: payload.sub }, (err, result) => {
+          if (err) return console.error(err);
+          res.send(result);
+        })
+      }
     })
   }
 });
 
 router.post('/', (req, res) => {
-  if(req.body.username && req.body.name){
-    mongoose.User.find({username: req.body.username}, (err, result) =>{
-      if (err) return console.error(err);
-      if(result){
-        var food = new mongoose.Food({user: result._id, name: req.body.name, date: req.body.date, energy: req.body.energy, fat: req.body.fat, carbohydrate: req.body.carbohydrate, fibre: req.body.fibre, protien: req.body.protien, salt: req.body.salt })
+  var token = (req.header('X-Access-Token')) || '';
+  if (req.body.name) {
+    auth.decodeToken(token, (err, payload) => {
+      if (err) {
+        console.log('Error handler: ' + err.message);
+        res.status((err.status || 401));
+      } else {
+        var food = new mongoose.Food({ user: payload.sub, name: req.body.name, date: req.body.date, energy: req.body.energy, fat: req.body.fat, carbohydrate: req.body.carbohydrate, fibre: req.body.fibre, protien: req.body.protien, salt: req.body.salt })
         food.save(() => {
           res.send(food);
         });
-      } else{
-        res.send("User doenst exist");
       }
-    });
-  } else{
+    })
+  } else {
     res.send("Wrong post body");
   }
 });
 
-router.put("/:id", (req,res) =>{
-  if(req.params["id"] && req.body.name){
-    mongoose.Food.findOne({_id: req.params["id"]}, (err, food) =>{
-      if (err) return console.error(err);
-      if(food){
-        food.name = req.body.name;
-        food.description = req.body.description;
-        food.muscles = req.body.muscles;
-        food.save(() => {
-          res.send(food);
+router.put("/:id", (req, res) => {
+  var token = (req.header('X-Access-Token')) || '';
+  if (req.params["id"] && req.body.name) {
+    auth.decodeToken(token, (err, payload) => {
+      if (err) {
+        console.log('Error handler: ' + err.message);
+        res.status((err.status || 401));
+      } else {
+        mongoose.Food.findOne({ user: payload.sub, _id: req.params["id"] }, (err, food) => {
+          if (err) return console.error(err);
+          if (food) {
+            food.name = req.body.name;
+            food.description = req.body.description;
+            food.muscles = req.body.muscles;
+            food.save(() => {
+              res.send(food);
+            });
+          } else {
+            res.send(401);
+          }
         });
-      } else{
-        res.send(401);
       }
-    });
-  } else{
+    })
+  } else {
     res.send(401);
   }
 });
 
-router.delete("/:id", (req,res) =>{
-  if(req.params["id"]){
-    mongoose.Food.deleteOne({_id : req.params["id"]}, (err) =>{
-      if (err) return console.error(err);
-        return req.params["id"];
+router.delete("/:id", (req, res) => {
+  var token = (req.header('X-Access-Token')) || '';
+  if (req.params["id"]) {
+    auth.decodeToken(token, (err, payload) => {
+      if (err) {
+        console.log('Error handler: ' + err.message);
+        res.status((err.status || 401));
+      } else {
+        mongoose.Food.deleteOne({user: payload.sub, _id: req.params["id"] }, (err) => {
+          if (err) return console.error(err);
+          return req.params["id"];
+        });
+      }
     });
-  } else{
+  } else {
     res.send(401);
   }
 });

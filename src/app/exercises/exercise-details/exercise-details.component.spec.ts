@@ -1,13 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ExerciseDetailsComponent } from './exercise-details.component';
+import { ActivatedRoute, Router, Params } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 describe('ExerciseDetailsComponent', () => {
   let component: ExerciseDetailsComponent;
   let fixture: ComponentFixture<ExerciseDetailsComponent>;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
+    TestBed.configureTestingModule({providers: [
+      { provide: ActivatedRoute, useValue: {params: new Observable<Params>()} },
+      { provide: HttpClient, useValue: {} },
+      { provide: Router, useValue: {} }
+    ],
       declarations: [ ExerciseDetailsComponent ]
     })
     .compileComponents();

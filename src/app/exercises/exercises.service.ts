@@ -37,7 +37,7 @@ export class ExercisesService {
 
   saveExercise(id: String, exercise: Exercise) {
     if(this.exercises) {
-      this.http.put<any>(`${environment.apiUrl}/api/exercise/${id}`,{name: exercise.name, description: exercise.description, muscles: exercise.muscles}).subscribe((result) => {this.exercises.splice(this.exercises.findIndex(item => item._id == id)); this.exercises.push(new Exercise(result))});
+      this.http.put<any>(`${environment.apiUrl}/api/exercise/${id}`,{name: exercise.name, description: exercise.description, muscles: exercise.muscles}).subscribe((result) => {this.exercises.splice(this.exercises.findIndex(item => item._id == id), 1); this.exercises.push(new Exercise(result))});
     }
   }
 

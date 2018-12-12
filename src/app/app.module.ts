@@ -21,6 +21,7 @@ import { MenuComponent } from './menu/menu.component';
 
 
 import { TrainingschedulesComponent } from './trainingschedules/trainingschedules.component';
+import { TrainingscheduleDeleteComponent } from './trainingschedules/trainingschedule-delete/trainingschedule-delete.component';
 import { TrainingscheduleDetailsComponent } from './trainingschedules/trainingschedule-details/trainingschedule-details.component';
 import { TrainingscheduleEditComponent } from './trainingschedules/trainingschedule-edit/trainingschedule-edit.component';
 import { TrainingscheduleListComponent } from './trainingschedules/trainingschedule-list/trainingschedule-list.component';
@@ -67,6 +68,7 @@ import { RegisterComponent } from './register/register.component';
     HomeComponent,
     MenuComponent,
     TrainingschedulesComponent,
+    TrainingscheduleDeleteComponent,
     TrainingscheduleDetailsComponent,
     TrainingscheduleEditComponent,
     TrainingscheduleListComponent,

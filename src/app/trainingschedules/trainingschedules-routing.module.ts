@@ -4,6 +4,8 @@ import { TrainingschedulesComponent } from './trainingschedules.component';
 import { TrainingscheduleListComponent } from './trainingschedule-list/trainingschedule-list.component';
 import { TrainingscheduleDetailsComponent } from './trainingschedule-details/trainingschedule-details.component';
 import { TrainingscheduleEditComponent } from './trainingschedule-edit/trainingschedule-edit.component';
+import { TrainingscheduleDeleteComponent } from './trainingschedule-delete/trainingschedule-delete.component';
+
 
 const routes: Routes = [
   { path: 'trainingschedules/list', component: TrainingscheduleListComponent },
@@ -16,6 +18,7 @@ const routes: Routes = [
   { path: 'trainingschedules', component: TrainingschedulesComponent, children: [
     { path: '', component: TrainingscheduleDetailsComponent },
     { path: 'new', component: TrainingscheduleEditComponent, data: { trainingscheduleAlreadyExists: false, title: 'New Trainingschedule' } },
+    { path: ':id/delete', component: TrainingscheduleDeleteComponent },
     { path: ':id', component: TrainingscheduleDetailsComponent },
     { path: ':id/edit', component: TrainingscheduleEditComponent, data: { trainingscheduleAlreadyExists: true } },
   ] },
