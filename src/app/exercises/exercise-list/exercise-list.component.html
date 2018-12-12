@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col">
+    <button type="button" class="btn btn-primary float-right" routerLink='new'>Nieuwe oefening</button>
+  </div>
+</div>
+
+
+<div *ngIf="exercises" class="row">
+  <table class="table table-hover">
+    <thead>
+      <th>Naam</th>
+      <th>Options</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let exercise of exercises;" app-exercise-item [selectedExercise]="exercise">
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="!exercises">
+  <p>No exercises found. Loading...</p>
+</div>

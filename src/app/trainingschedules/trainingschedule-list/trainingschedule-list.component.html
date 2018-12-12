@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col">
+    <button type="button" class="btn btn-primary float-right" routerLink='new'>New Trainingschema</button>
+  </div>
+</div>
+
+
+<div *ngIf="trainingschedules" class="row">
+  <table class="table table-hover">
+    <thead>
+      <th>Name</th>
+      <th>Options</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let trainingschedule of trainingschedules;" app-trainingschedule-item [selectedTrainingschedule]="trainingschedule" [index]="i">
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="!trainingschedules">
+  <p>No trainingschedules found. Loading...</p>
+</div>

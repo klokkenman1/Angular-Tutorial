@@ -1,0 +1,30 @@
+<div class="sticky-component">
+
+  <div class="row">
+    <div class="col-8">
+      <h2>{{title}}</h2>
+    </div>
+  </div>
+
+  <div *ngIf="trainingschedule">
+    <div class="media">
+      <div class="media-body">
+        <h5 class="mt-0">{{trainingschedule.name | titlecase}}</h5>
+      </div>
+    </div>
+
+    <div *ngFor="let day of trainingschedule.days; let i = index">
+      <h5>Day {{i + 1}}</h5>
+      <div *ngFor="let exercise of trainingschedule.days[i]" class="row">
+        <div class="col-md-10">
+          <p>{{getExerciseName(exercise)}}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div *ngIf="!trainingschedule">
+    <p>Select a trainingschedule first.</p>
+  </div>
+
+</div>

@@ -1,0 +1,9 @@
+<td>
+  {{selectedExercise.name}}
+</td>
+<td>
+  <button *ngIf="selectedExercise" type="button" class="btn btn-outline-warning float-right" [routerLink]="[selectedExercise._id, 'edit']">Edit</button>
+  <button *ngIf="selectedExercise" type="button" class="btn btn-outline-warning float-right" [routerLink]='[selectedExercise._id]'>Details</button>
+  <button *ngIf="selectedExercise" type="button" class="btn btn-outline-warning float-right" [routerLink]="[selectedExercise._id, 'delete']">Delete</button>
+
+</td>

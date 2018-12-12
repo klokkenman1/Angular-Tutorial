@@ -1,0 +1,27 @@
+<div class="sticky-component">
+
+  <div class="row">
+    <div class="col-8">
+      <h2>{{title}}</h2>
+    </div>
+  </div>
+
+  <div *ngIf="exercise">
+    <div class="media">
+      <div class="media-body">
+        <h5>Naam:</h5>
+        <h6>{{exercise.name | titlecase}}</h6>
+
+        <h5>Beschrijving:</h5>
+        <h6>{{exercise.description}}</h6>
+
+        <h5>Spieren:</h5>
+        <h6 *ngFor="let muscle of exercise.muscles;">{{muscle}}</h6>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!exercise">
+    <p>Selecteer eerst een oefening.</p>
+  </div>
+
+</div>

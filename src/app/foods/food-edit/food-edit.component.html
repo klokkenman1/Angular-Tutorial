@@ -1,0 +1,83 @@
+<div class="sticky-component">
+  <div class="row">
+    <div class="col">
+      <h2>{{title}}</h2>
+    </div>
+  </div>
+
+  <form *ngIf="food" #foodEditForm="ngForm" name="form" (ngSubmit)="foodEditForm.form.valid && onSubmit()" novalidate>
+
+    <div class="form-row">
+      <div class="form-group col-sm-12 col-lg-6">
+        <label for="name">Naam</label>
+        <input type="text" class="form-control" [(ngModel)]="food.name" name="name" #name="ngModel" [ngClass]="{ 
+                'is-invalid': name.invalid && (name.dirty || name.touched)
+              }"
+          required minlength="3" />
+        <div *ngIf="name.invalid && (name.touched)" class="invalid-feedback">
+          <div *ngIf="name.errors.required">Naam is verplicht</div>
+          <div *ngIf="name.errors.minlength">Naam moet minimaal 3 charachters lang zijn.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-sm-12 col-lg-6">
+        <label for="name">Date</label>
+        <input type="text" class="form-control" [(ngModel)]="food.date" name="date" readonly />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-sm-12 col-lg-6">
+        <label for="name">Energie (kcal)</label>
+        <input type="text" class="form-control" [(ngModel)]="food.energy" name="energy" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-sm-12 col-lg-6">
+        <label for="name">Vetten</label>
+        <input type="text" class="form-control" [(ngModel)]="food.fat" name="fat" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-sm-12 col-lg-6">
+        <label for="name">Koolhydraten</label>
+        <input type="text" class="form-control" [(ngModel)]="food.carbohydrate" name="carbohydrate" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-sm-12 col-lg-6">
+        <label for="name">Vezels</label>
+        <input type="text" class="form-control" [(ngModel)]="food.fibre" name="fibre" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-sm-12 col-lg-6">
+        <label for="name">Eiwitten</label>
+        <input type="text" class="form-control" [(ngModel)]="food.protien" name="protien" />
+      </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-sm-12 col-lg-6">
+          <label for="name">Zout</label>
+          <input type="text" class="form-control" [(ngModel)]="food.salt" name="salt" />
+        </div>
+      </div>
+
+    <div class="row">
+      <div class="form-group">
+        <button type="button" class="btn btn-outline-warning float-right" routerLink='..'>Cancel
+        </button>
+        <button type="submit" class="btn btn-success float-right" [disabled]="!foodEditForm.valid">Save
+        </button>
+      </div>
+    </div>
+
+  </form>
+</div>

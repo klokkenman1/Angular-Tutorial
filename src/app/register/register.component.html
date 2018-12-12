@@ -1,0 +1,48 @@
+<div class="sticky-component">
+    <div class="row">
+      <div class="col">
+        <h2>{{title}}</h2>
+      </div>
+    </div>
+  
+    <form #loginForm="ngForm" name="form" (ngSubmit)="loginForm.form.valid && onSubmit()" novalidate>
+  
+      <div class="form-row">
+        <div class="form-group col-sm-12 col-lg-6">
+          <label for="username">Gebruikersnaam</label>
+          <input type="text" class="form-control" [(ngModel)]="usernameText" name="username" #username="ngModel"
+            [ngClass]="{ 
+                'is-invalid': username.invalid && (username.dirty || username.touched)
+              }"
+            required  />
+          <div *ngIf="username.invalid && (username.touched)" class="invalid-feedback">
+            <div *ngIf="username.errors.required">Gebruikersnaam is verplicht</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+          <div class="form-group col-sm-12 col-lg-6">
+            <label for="password">Wachtwoord</label>
+            <input type="text" class="form-control" [(ngModel)]="passwordText" name="password" #password="ngModel"
+              [ngClass]="{ 
+                  'is-invalid': password.invalid && (password.dirty || password.touched)
+                }"
+              required/>
+            <div *ngIf="password.invalid && (password.touched)" class="invalid-feedback">
+              <div *ngIf="password.errors.required">Wachtwoord is verplicht</div>
+            </div>
+          </div>
+        </div>
+  
+      <div class="row">
+        <div class="form-group">
+          <button type="button" class="btn btn-outline-warning float-right" routerLink='..'>Cancel
+          </button>
+          <button type="submit" class="btn btn-success float-right" [disabled]="!loginForm.valid">Register
+          </button>
+        </div>
+      </div>
+  
+    </form>
+  </div>
