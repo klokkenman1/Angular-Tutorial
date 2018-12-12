@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ExerciseDeleteComponent } from './exercise-delete.component';
+import { ActivatedRoute, Router, Params } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 describe('ExerciseDeleteComponent', () => {
   let component: ExerciseDeleteComponent;
@@ -8,9 +11,14 @@ describe('ExerciseDeleteComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ExerciseDeleteComponent ]
+      providers: [
+        { provide: ActivatedRoute, useValue: {params: new Observable<Params>()} },
+        { provide: HttpClient, useValue: {} },
+        { provide: Router, useValue: {} }
+      ],
+      declarations: [ExerciseDeleteComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -23,3 +31,4 @@ describe('ExerciseDeleteComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+

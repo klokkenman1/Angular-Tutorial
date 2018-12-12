@@ -31,8 +31,6 @@ app.use(express.static(path.join(__dirname, 'dist', appname)));
 //Catch all except login and register
 app.all( new RegExp("^((?!login|register).)*$"), function (req, res, next) {
 
-    console.log("VALIDATE TOKEN")
-  
     var token = (req.header('X-Access-Token')) || '';
   
     auth.decodeToken(token, (err, payload) => {
@@ -65,3 +63,5 @@ app.set('port', port);
 const server = http.createServer(app);
 // Listen on provided port, on all network interfaces.
 server.listen(port, () => console.log(`Angular app \'${appname}\' running on port ${port}`));
+
+module.exports = server;
