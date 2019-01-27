@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: "https://cswd-kelvin.herokuapp.com"
+  apiUrl: "http://localhost:4200" //"https://cswd-kelvin.herokuapp.com"
 };

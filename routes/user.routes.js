@@ -11,11 +11,11 @@ router.post('/login', (req, res) => {
         console.log("loggedin")
         res.status(200).send(auth.encodeToken(user._id));
       } else{
-        res.send("Wrong username or password");
+        res.status(400).send("Wrong username or password");
       }
     });
   } else{
-    res.send("Wrong post body");
+    res.status(400).send("Wrong post body");
   }
 });
 
@@ -29,11 +29,11 @@ router.post('/register', (req, res) => {
           res.send(auth.encodeToken(user._id));
         });
       } else{
-        res.send("Username taken");
+        res.status(409).send("Username taken");
       }
     });
   } else{
-    res.send("Wrong post body");
+    res.status(400).send("Wrong post body");
   }
 });
 

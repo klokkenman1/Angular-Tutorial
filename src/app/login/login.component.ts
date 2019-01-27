@@ -12,6 +12,7 @@ export class LoginComponent {
   title = "Login"
   usernameText : string;
   passwordText : string;
+  message : any;
 
   constructor(private authService : AuthService,private route: ActivatedRoute,
     private router: Router) { }
@@ -22,6 +23,8 @@ export class LoginComponent {
       if(result){
         this.router.navigate(['..'], { relativeTo: this.route });
       }
+    },error => {
+      this.message = 'Wrong username or password';
     })
   }
 
