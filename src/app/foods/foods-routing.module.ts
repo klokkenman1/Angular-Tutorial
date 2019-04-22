@@ -5,23 +5,28 @@ import { FoodListComponent } from './food-list/food-list.component';
 import { FoodDetailsComponent } from './food-details/food-details.component';
 import { FoodEditComponent } from './food-edit/food-edit.component';
 import { FoodDeleteComponent } from './food-delete/food-delete.component';
+import { AuthGuard } from '../auth.guard';
 
 
 const routes: Routes = [
-  { path: 'foods/list', component: FoodListComponent },
-  { path: 'foods/list/new', component: FoodEditComponent, data: { 
-    foodAlreadyExists : false,
-    title: 'New User' 
-  } },
-  { path: 'foods/list/:id', component: FoodDetailsComponent },
-  { path: 'foods/list/:id/edit', component: FoodEditComponent, data: { foodAlreadyExists: true, title: 'Edit Food' } },
-  { path: 'foods', component: FoodsComponent, children: [
-    { path: '', component: FoodDetailsComponent },
-    { path: 'new', component: FoodEditComponent, data: { foodAlreadyExists: false, title: 'New Food' } },
-    { path: ':id/delete', component: FoodDeleteComponent },
-    { path: ':id', component: FoodDetailsComponent },
-    { path: ':id/edit', component: FoodEditComponent, data: { foodAlreadyExists: true } },
-  ] },
+  {
+    path: 'foods', component: FoodsComponent, children: [
+      { path: '', component: FoodDetailsComponent },
+      { path: 'new', component: FoodEditComponent, data: { foodAlreadyExists: false, title: 'New Food' } },
+      { path: ':id/delete', component: FoodDeleteComponent },
+      { path: ':id', component: FoodDetailsComponent },
+      { path: ':id/edit', component: FoodEditComponent, data: { foodAlreadyExists: true } },
+      { path: 'list/:id/edit', component: FoodEditComponent, data: { foodAlreadyExists: true, title: 'Edit Food' } },
+      { path: 'list/:id', component: FoodDetailsComponent },
+      {
+        path: 'list/new', component: FoodEditComponent, data: {
+          foodAlreadyExists: false,
+          title: 'New Food'
+        }
+      },
+      { path: 'list', component: FoodListComponent },
+    ], canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({
