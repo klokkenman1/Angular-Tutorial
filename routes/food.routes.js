@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require("../db/mongoose");
-const auth =  require('../authentication');
+const auth = require('../authentication');
 
 router.get('/', (req, res) => {
   var token = (req.header('X-Access-Token')) || '';
@@ -26,7 +26,7 @@ router.get('/:id', (req, res) => {
         console.log('Error handler: ' + err.message);
         res.status((err.status || 401));
       } else {
-        mongoose.Food.findOne({ _id: req.params["id"], name: payload.sub }, (err, result) => {
+        mongoose.Food.findOne({ _id: req.params["id"] }, (err, result) => {
           if (err) return console.error(err);
           res.send(result);
         })
@@ -90,9 +90,9 @@ router.delete("/:id", (req, res) => {
         console.log('Error handler: ' + err.message);
         res.status((err.status || 401));
       } else {
-        mongoose.Food.deleteOne({user: payload.sub, _id: req.params["id"] }, (err) => {
+        mongoose.Food.deleteOne({ user: payload.sub, _id: req.params["id"] }, (err) => {
           if (err) return console.error(err);
-          return req.params["id"];
+          res.send(req.params["id"]);
         });
       }
     });

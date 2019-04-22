@@ -29,7 +29,7 @@ const appname = 'my-first-app';
 app.use(express.static(path.join(__dirname, 'dist', appname)));
 
 //Catch all except login and register
-app.all( new RegExp("^((?!login|register).)*$"), function (req, res, next) {
+app.all( new RegExp("^((\/api\/exercise|\/api\/trainingschedule|\/api\/food).*)$"), function (req, res, next) {
 
     var token = (req.header('X-Access-Token')) || '';
   

@@ -55,7 +55,7 @@ router.delete("/:id", (req, res) => {
   if (req.params["id"]) {
     mongoose.Exercise.deleteOne({ _id: req.params["id"] }, (err) => {
       if (err) return console.error(err);
-      return req.params["id"];
+      res.send(req.params["id"]);
     });
   } else {
     res.send(401);

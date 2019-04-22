@@ -6,7 +6,7 @@ chai.should();
 
 chai.use(chaiHttp);
 
-describe('Trainingschedule routes', () => {
+describe('Food routes', () => {
 
   var token;
 
@@ -17,62 +17,58 @@ describe('Trainingschedule routes', () => {
     })
   });
 
-  var trainingscheduleId;
+  var foodId;
 
-  it('Should add trainingschedule', (done) => {
+  it('Should add food', (done) => {
     chai.request(server)
-      .post('/api/trainingschedule').set('x-access-token', token)
-      .send({ name: "test", days: [] })
+      .post('/api/food').set('x-access-token', token)
+      .send({ name: "test" })
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.an('object');
 
-        res.body.should.have.property('days').eql([]);
         res.body.should.have.property('name').eql('test');
 
-        trainingscheduleId = res.body._id;
+        foodId = res.body._id;
 
         done();
       })
   });
 
-  it('Should get trainingschedules', (done) => {
+  it('Should get food', (done) => {
     chai.request(server)
-      .get('/api/trainingschedule').set('x-access-token', token)
+      .get('/api/food').set('x-access-token', token)
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.an('array');
 
-        res.body[0].should.have.property('days');
         res.body[0].should.have.property('name');
         done();
       })
   });
 
 
-  it('Should get one trainingschedule', (done) => {
+  it('Should get one food', (done) => {
     chai.request(server)
-      .get('/api/trainingschedule/' + trainingscheduleId).set('x-access-token', token)
+      .get('/api/food/' + foodId).set('x-access-token', token)
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.an('object');
 
-        res.body.should.have.property('days');
         res.body.should.have.property('name').eql("test");
         res.body.should.have.property('user');
         done();
       })
   });
 
-  it('Should return trainingschedule when editing', (done) => {
+  it('Should return food when editing', (done) => {
     chai.request(server)
-      .put('/api/trainingschedule/' + trainingscheduleId).set('x-access-token', token)
-      .send({ name: "test1", days: [] })
+      .put('/api/food/' + foodId).set('x-access-token', token)
+      .send({ name: "test1" })
       .end((err, res) => {
         res.should.have.status(200);
 
         res.body.should.have.property('name').eql("test1");
-        res.body.should.have.property('days').eql([]);
 
 
         done();
@@ -81,7 +77,7 @@ describe('Trainingschedule routes', () => {
 
   it('Should return id when deleting', (done) => {
     chai.request(server)
-      .delete('/api/trainingschedule/' + trainingscheduleId).set('x-access-token', token)
+      .delete('/api/food/' + foodId).set('x-access-token', token)
       .end((err, res) => {
         res.should.have.status(200);
         res.text.should.be.an("string");

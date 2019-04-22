@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class AuthService {
@@ -11,7 +12,8 @@ export class AuthService {
 
 
     constructor(
-        private http: HttpClient
+        private http: HttpClient,
+        private myRoute: Router
     ) {
         console.log('AuthService constructed');
         this.loggedInSubject = new BehaviorSubject<String>(this.getToken())
@@ -47,6 +49,7 @@ export class AuthService {
     logout() {
         localStorage.removeItem('token');
         this.loggedInSubject.next(null);
+        this.myRoute.navigate(["home"]);
     }
 
 }

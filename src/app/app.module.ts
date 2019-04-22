@@ -46,7 +46,7 @@ import { AuthService } from './auth.service';
 
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-
+import { AuthGuard } from './auth.guard';
 
 
 @NgModule({
@@ -88,11 +88,12 @@ import { RegisterComponent } from './register/register.component';
     LoginComponent,
     RegisterComponent
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptor,
-    multi: true
-  },AuthService
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },AuthService, AuthGuard
   ],
   bootstrap: [AppComponent]
 })
